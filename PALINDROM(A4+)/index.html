@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PALINDROM</title>
+</head>
+
+<body>
+    <script>
+        function palindrom(value) {
+            value = value.toLowerCase();
+
+            let result = '';
+            for (let i = 0; i < value.length; i++) {
+                let letter = value[i];
+                if (letter !== ' ' &&
+                    letter !== '!' &&
+                    letter !== '.' &&
+                    letter !== ',' &&
+                    letter !== '?' &&
+                    letter !== ':' &&
+                    letter !== ';' &&
+                    letter !== 'ь' &&
+                    letter !== 'ъ') {
+                    if (letter === 'ё') {
+                        letter = 'е'
+                    }
+                    result += letter;
+                }
+            }
+
+            function isPalindrom(value) {
+                let flag = true;
+                if (value.length <= 1) {
+                    return flag;
+                }
+
+                if (value[0] == value[value.length - 1]) {
+                    return isPalindrom(value.slice(1, value.length - 1));
+                }
+
+                flag = !flag;
+
+                return flag;
+            }
+
+            return isPalindrom(result);
+
+        }
+
+        console.log(palindrom('Я иду. с мечем, судия!!!!!'));
+    </script>
+</body>
+
+</html>
