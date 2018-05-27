@@ -8,19 +8,22 @@ button.onclick = function() {
 
 function getVowels(value) {
     let result = 0;
+    let vowels = {
+        а: true,
+        е: true,
+        ё: true,
+        и: true,
+        о: true,
+        у: true,
+        ы: true,
+        э: true,
+        ю: true,
+        я: true
+    }
+
     for (let i = 0; i < value.length; i++) {
         let letter = value[i];
-        if (letter == 'а' ||
-            letter == 'е' ||
-            letter == 'ё' ||
-            letter == 'и' ||
-            letter == 'о' ||
-            letter == 'у' ||
-            letter == 'ы' ||
-            letter == 'э' ||
-            letter == 'ю' ||
-            letter == 'я'
-        ) {
+        if (letter in vowels) {
             result += 1;
         }
     }
