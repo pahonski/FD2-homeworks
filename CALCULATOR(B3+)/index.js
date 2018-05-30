@@ -1,7 +1,7 @@
 let button = document.querySelector('.button');
 button.onclick = function() {
     let value = document.querySelector('.value').value;
-    document.querySelector('.output').innerHTML = `Результат: ${calculate(value)}`;
+    document.querySelector('.output').innerHTML = `Результат: ${parseString(value)}`;
 }
 
 function parseString(str) {
