@@ -1,10 +1,23 @@
 let button = document.querySelector('.button');
 button.onclick = function() {
     let value = document.querySelector('.value').value;
-    document.querySelector('.output').innerHTML = `Результат: ${parseString(value)}`;
+    document.querySelector('.output').innerHTML = `Результат: ${calculate(value)}`;
 }
 
-function parseString(str) {
+function calculate(str) {
+  let arr = parseString(str);
+
+  console.log(arr);
+
+  function searchFragment(arr) {
+    
+  }
+
+  function calcFragment(frag) {
+
+  }
+
+  function parseString(str) {
     str = str.replace(/\s+/g, '');
 
     let part = '';
@@ -61,3 +74,5 @@ function parseString(str) {
     return parts;
     
   }
+}
+
