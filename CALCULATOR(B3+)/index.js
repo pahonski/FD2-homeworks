@@ -5,16 +5,66 @@ button.onclick = function() {
 }
 
 function calculate(str) {
-  let arr = parseString(str);
-
-  console.log(arr);
+  let myArr = parseString(str);
+  searchFragment(myArr);
 
   function searchFragment(arr) {
+    console.log(arr);
+    let range = [];
+    let fragmentArr = [];
+
+    arr.forEach((element, index) => {
+      
+      if(element == ')') {
+        range.push(index);
+        for(let i = index; i >= 0; i--) {
+          if(arr[i] == '(') {
+            range.unshift(i);
+            fragmentArr = arr.slice(range[0] + 1, range[1]);
+            myArr.splice(range[0], fragmentArr.length + 2, calcFragment(fragmentArr));
+            range = [];
+            fragmentArr = [];
+          }
+        }
+      }
+    });
+
+    arr.forEach(function(item, index) {
+      console.log(item);
+      if(item == '*') {
+        fragmentArr = arr.slice(index - 1, index + 2);
+        
+        console.log(fragmentArr);
+        myArr.splice(index -1, 3, calcFragment(fragmentArr));
+        console.log(myArr);
+        fragmentArr = [];
+    }
+    });
+
+    
     
   }
 
   function calcFragment(frag) {
+    let result = 0;
 
+    frag.forEach(function(item, index){
+      switch(item) {
+        case '+':
+        result = +frag[0] + +frag[2];
+        break;
+        case '-':
+        result = +frag[0] - +frag[2];
+        break;
+        case '*':
+        result = +frag[0] * +frag[2];
+        break;
+        case '/':
+        result = +frag[0] / +frag[2];
+        break;
+      }
+    });
+    return result;
   }
 
   function parseString(str) {
@@ -27,7 +77,6 @@ function calculate(str) {
     
     for(let i = 0; i < str.length; i++) {
       value = str[i];
-      console.log(value);
       switch(value) {
         case '+':
         case '*':
@@ -68,8 +117,6 @@ function calculate(str) {
     if(part) {
       parts.push(part);
     }
-
-    console.log(parts);
 
     return parts;
     
