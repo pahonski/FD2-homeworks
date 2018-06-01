@@ -9,7 +9,6 @@ function calculate(str) {
   searchFragment(myArr);
 
   function searchFragment(arr) {
-    console.log(arr);
     let range = [];
     let fragmentArr = [];
 
@@ -29,20 +28,23 @@ function calculate(str) {
       }
     });
 
-    arr.forEach(function(item, index) {
-      console.log(item);
-      if(item == '*') {
-        fragmentArr = arr.slice(index - 1, index + 2);
-        
-        console.log(fragmentArr);
-        myArr.splice(index -1, 3, calcFragment(fragmentArr));
-        console.log(myArr);
+    for(let i = 0; i <= myArr.length; i++) {
+      if(myArr[i] == '*' || myArr[i] == '/') {
+        fragmentArr = arr.slice(i - 1, i + 2);
+        myArr.splice(i -1, 3, calcFragment(fragmentArr));
         fragmentArr = [];
+        i = 0;
+      } 
     }
-    });
 
-    
-    
+    for(let i = 0; i <= myArr.length; i++) {
+      if(myArr[i] == '+' || myArr[i] == '-') {
+        fragmentArr = arr.slice(i - 1, i + 2);
+        myArr.splice(i -1, 3, calcFragment(fragmentArr));
+        fragmentArr = [];
+        i = 0;
+      } 
+    }
   }
 
   function calcFragment(frag) {
@@ -120,6 +122,10 @@ function calculate(str) {
 
     return parts;
     
+  }
+
+  if(myArr.length === 1) {
+    return myArr[0];
   }
 }
 
