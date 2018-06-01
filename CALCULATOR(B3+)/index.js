@@ -12,25 +12,22 @@ function calculate(str) {
         let range = [];
         let fragmentArr = [];
         let tempArray = arr;
-        console.log(tempArray);
 
         tempArray.forEach((element, index) => {
 
             if (element == ')') {
                 range.push(index);
                 for (let i = index; i >= 0; i--) {
+
                     if (tempArray[i] == '(') {
                         range.unshift(i);
                         fragmentArr = tempArray.slice(range[0] + 1, range[1]);
-                        console.log('()', fragmentArr, 'range', range);
+
                         if (fragmentArr.length > 3) {
-                            console.log('tempArray', tempArray);
                             let temp = searchFragment(fragmentArr);
-                            console.log('temp', temp);
-                            tempArray.splice(range[0], range[1] - 1, temp[0]);
-                            console.log('tempArraySplice', tempArray);
+                            tempArray.splice(range[0], (range[1] - range[0] + 1), temp[0]);
+
                         } else {
-                            console.log('tempArray', tempArray);
                             tempArray.splice(range[0], fragmentArr.length + 2, calcFragment(fragmentArr));
                         }
                         range = [];
@@ -38,6 +35,7 @@ function calculate(str) {
 
                     }
                 }
+                console.log(tempArray);
             }
         });
 
