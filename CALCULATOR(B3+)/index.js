@@ -13,13 +13,14 @@ function calculate(str) {
         let fragmentArr = [];
         let tempArray = arr;
 
-        tempArray.forEach((element, index) => {
-
-            if (element == ')') {
-                range.push(index);
-                for (let i = index; i >= 0; i--) {
+        for (let j = 0; j < tempArray.length; j++) {
+            console.log('!!!!', tempArray);
+            if (tempArray[j] == ')') {
+                range.push(j);
+                for (let i = j; i >= 0; i--) {
 
                     if (tempArray[i] == '(') {
+                        console.log(i, '(');
                         range.unshift(i);
                         fragmentArr = tempArray.slice(range[0] + 1, range[1]);
 
@@ -28,16 +29,24 @@ function calculate(str) {
                             tempArray.splice(range[0], (range[1] - range[0] + 1), temp[0]);
 
                         } else {
+                            console.log(tempArray);
+                            console.log(range, tempArray[range[0]]);
                             tempArray.splice(range[0], fragmentArr.length + 2, calcFragment(fragmentArr));
+                            console.log(tempArray);
+
                         }
                         range = [];
                         fragmentArr = [];
+                        j = 0;
+                        break;
 
                     }
+
+
                 }
                 console.log(tempArray);
             }
-        });
+        }
 
         for (let i = 0; i <= tempArray.length; i++) {
             if (tempArray[i] == '*' || tempArray[i] == '/') {
