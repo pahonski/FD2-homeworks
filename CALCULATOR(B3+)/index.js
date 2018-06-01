@@ -14,26 +14,23 @@ function calculate(str) {
         let tempArray = arr;
 
         for (let j = 0; j < tempArray.length; j++) {
-            console.log('!!!!', tempArray);
+
             if (tempArray[j] == ')') {
                 range.push(j);
                 for (let i = j; i >= 0; i--) {
 
                     if (tempArray[i] == '(') {
-                        console.log(i, '(');
+
                         range.unshift(i);
                         fragmentArr = tempArray.slice(range[0] + 1, range[1]);
 
-                        if (fragmentArr.length > 3) {
+                        if (fragmentArr.length === 1) {
+                            tempArray.splice(range[0], fragmentArr.length + 2, fragmentArr[0]);
+                        } else if (fragmentArr.length > 3) {
                             let temp = searchFragment(fragmentArr);
                             tempArray.splice(range[0], (range[1] - range[0] + 1), temp[0]);
-
                         } else {
-                            console.log(tempArray);
-                            console.log(range, tempArray[range[0]]);
                             tempArray.splice(range[0], fragmentArr.length + 2, calcFragment(fragmentArr));
-                            console.log(tempArray);
-
                         }
                         range = [];
                         fragmentArr = [];
@@ -44,7 +41,6 @@ function calculate(str) {
 
 
                 }
-                console.log(tempArray);
             }
         }
 
