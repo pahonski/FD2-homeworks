@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOOD
+
+  </title>
+</head>
+
+<body>
+  <script>
+
+    "use strict";
+
+
+
+    function mood(colorsCount) {
+      var colors = ['', 'красный', 'оранжевый', 'жёлтый', 'зелёный', 'голубой', 'синий', 'фиолетовый'];
+      var colorsControl = {
+        1: false,
+        2: false,
+        3: false,
+        4: false,
+        5: false,
+        6: false,
+        7: false
+      }
+
+      function randomDiap(n, m) {
+        var result = Math.floor(Math.random() * (m - n + 1)) + n;
+        if (colorsControl[result] == false) {
+          colorsControl[result] = true;
+          return result;
+        } else {
+          return randomDiap(n, m);
+        }
+      }
+
+      console.log('цветов: ' + colorsCount);
+      for (var i = 1; i <= colorsCount; i++) {
+        var n = randomDiap(1, 7);
+        console.log(n);
+        var colorName = colors[n];
+        console.log(colorName);
+      }
+    }
+
+    mood(3);
+
+  </script>
+
+</body>
+
+</html>
