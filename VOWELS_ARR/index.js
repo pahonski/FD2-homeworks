@@ -1,14 +1,17 @@
-let modeButton = document.querySelector('.mode');
+let modeButtons = document.querySelector('.mode');
 let mode = 'foreach';
-modeButton.onclick = function(e) {
+modeButtons.onclick = function(e) {
     let modeElement = e.target;
-    mode = modeElement.textContent;
-    let allModeElements = document.querySelectorAll('.modeButton');
-    allModeElements.forEach(function(el) {
-        el.classList.remove('active');
-    })
-    modeElement.classList.add('active');
-    console.log(mode);
+    if(modeElement.className == 'modeButton') {
+        mode = modeElement.textContent;
+        let allModeElements = document.querySelectorAll('.modeButton');
+        allModeElements.forEach(function(el) {
+            el.classList.remove('active');
+        })
+        modeElement.classList.add('active');
+        console.log(mode);
+    }
+    
 }
 
 
