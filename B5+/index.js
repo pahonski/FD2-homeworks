@@ -6,7 +6,7 @@ function buildWrapper(value) {
       '\"': '&quot;',
       '\&': '&amp;',
       '<': '&lt;',
-      '>': '	&gt;'
+      '>': '&gt;'
     }
 
     for (let i = 0; i < text.length; i++) {
