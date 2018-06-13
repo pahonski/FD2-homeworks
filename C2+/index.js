@@ -22,21 +22,6 @@ function deepCopy(value) {
         }, {});
         
       }
-      // switch(value.toString()) {
-      //   case '[object Array]':
-      //   let test = deepCopy(value);
-      //   console.log('test', test);
-      //   result = value.map(deepCopy);
-      //   break;
-      //   case '[object Date]':
-      //   result = new Date(value);
-      //   break;
-      //   default:
-      //   result = Object.keys(value).reduce(function(prev, key) {
-      //     prev[key] = deepCopy(value[key]);
-      //     return prev;
-      //   }, {});
-      // }
     }
   } else {
     result = value;
