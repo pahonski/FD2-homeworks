@@ -2,25 +2,24 @@
 
 function deepCopy(value) {
   let result;
-  if(typeof value === 'object') {
-    
-    if(value === null) {
+  if (typeof value === 'object') {
+
+    if (value === null) {
       result = null;
     } else {
-      
-      if(Array.isArray(value)) {
-        result = value.map(function(item){
-        
+
+      if (Array.isArray(value)) {
+        result = value.map(function (item) {
+
           return deepCopy(item);
         });
       } else if (value instanceof Date) {
         result = new Date(value);
       } else {
-        result = Object.keys(value).reduce(function(obj, item){
+        result = Object.keys(value).reduce(function (obj, item) {
           obj[item] = deepCopy(value[item]);
           return obj;
         }, {});
-        
       }
     }
   } else {
@@ -47,17 +46,17 @@ function deepCopy(value) {
 // console.log(isNaN(h2.f));// => true
 // console.log(h2.c instanceof Array);// => true
 
-var a1=[ 5, {b1:6,b2:7}, [33,22], null, undefined, Number.NaN];
-var a2=deepCopy(a1);
-console.log(a1===a2)// => false
-console.log(typeof(a2)===typeof(a1))// => true
-console.log(a1[0]===a2[0])// => true
-console.log(a1[1]===a2[1])// => false
-console.log(a1[1].b1===a2[1].b1)// => true
-console.log(a1[2]===a2[2])// => false
-console.log(a1[2][0]===a2[2][0])// => true
-console.log(a1[3]===a2[3])// => true
-console.log(a1[4]===a2[4])// => true
+var a1 = [5, { b1: 6, b2: 7 }, [33, 22], null, undefined, Number.NaN];
+var a2 = deepCopy(a1);
+console.log(a1 === a2)// => false
+console.log(typeof (a2) === typeof (a1))// => true
+console.log(a1[0] === a2[0])// => true
+console.log(a1[1] === a2[1])// => false
+console.log(a1[1].b1 === a2[1].b1)// => true
+console.log(a1[2] === a2[2])// => false
+console.log(a1[2][0] === a2[2][0])// => true
+console.log(a1[3] === a2[3])// => true
+console.log(a1[4] === a2[4])// => true
 console.log(isNaN(a2[5]))// => true
 console.log(a2[2] instanceof Array)// => true
 
