@@ -5,6 +5,7 @@ class Form {
         this.method = method;
         this.data = data;
         this.form = document.createElement('form');
+        this.form.style.cssText = 'padding: 10px; margin-bottom: 25px;'
     }
 
     generateForm() {
@@ -22,31 +23,29 @@ class Form {
         switch (kind) {
             case 'longtext':
                 field.appendChild(this.getInput(kind, label, name, 'long'));
-                console.log(field);
                 break;
             case 'shorttext':
                 field.appendChild(this.getInput(kind, label, name, 'short'));
-                console.log(field);
                 break;
             case 'number':
                 field.appendChild(this.getInput(kind, label, name));
-                console.log(field);
                 break;
             case 'combo':
                 field.appendChild(this.getSelect(label, name, variants));
-                console.log('combo');
                 break;
             case 'radio':
-                this.getSelect(label, name, variants);
-                console.log('radio');
+                field.appendChild(this.getRadio(label, name, variants));
                 break;
             case 'check':
+                field.appendChild(this.getCheck(label, name));
                 console.log('check');
                 break;
             case 'memo':
+            field.appendChild(this.getTextarea(label, name));
                 console.log('memo');
                 break;
             case 'submit':
+            field.appendChild(this.getSubmitButton(label));
                 console.log('submit');
                 break;
         }
@@ -101,18 +100,61 @@ class Form {
     }
 
     getRadio(label, name, variants) {
-        let fieldLabel = document.createElement('label');
-        fieldLabel.innerHTML = label;
+        let fieldDiv = document.createElement('div');
+        fieldDiv.innerHTML = label;
 
         variants.forEach(element => {
+            let radioLabel = document.createElement('label');
             let radioButton = document.createElement('input');
             radioButton.type = 'radio';
             radioButton.name = name;
+            radioButton.value = element.value;
+            radioLabel.innerHTML = element.text;
+            radioLabel.appendChild(radioButton);
+            fieldDiv.appendChild(radioLabel);
+
         });
+
+        return fieldDiv;
 
     }
 
+    getCheck(label, name) {
+        let fieldLabel = document.createElement('label');
+        fieldLabel.innerHTML = label;
+
+        let checkButton = document.createElement('input');
+        checkButton.type = 'checkbox';
+        checkButton.name = name;
+
+        fieldLabel.appendChild(checkButton);
+
+
+        return fieldLabel;
+
+    }
+
+    getTextarea(label, name) {
+        let fieldLabel = document.createElement('label');
+        fieldLabel.innerHTML = label;
+        let text = document.createElement('textarea');
+        text.name = name;
+
+        fieldLabel.appendChild(text);
+
+        return fieldLabel;
+    }
+
+    getSubmitButton(label) {
+        let submitButton = document.createElement('button');
+        submitButton.style = "display: block;";
+        submitButton.innerHTML = label;
+
+        return submitButton;
+    }
+
     render() {
+        this.generateForm();
         document.querySelector('.container').appendChild(this.form);
     }
 

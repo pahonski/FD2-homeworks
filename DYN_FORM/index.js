@@ -31,10 +31,7 @@ let formDef2 = [
 
 
 let form1 = new Form(formDef1, 'http://fe.it-academy.by/TestForm.php ', 'post');
-console.log(form1.data);
-form1.generateForm();
 form1.render();
 
-// let form3 = new Form([{ kind: 'longtext' }]);
-// form3.generateElement('', 'longtext');
-// form3.generateForm();
+let form2 = new Form(formDef2, 'http://fe.it-academy.by/TestForm.php ', 'post');
+form2.render();
