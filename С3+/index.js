@@ -1,63 +1,79 @@
 function deepComp(val1, val2) {
-    let val1Prop = 0;
-    let val2Prop = 0;
 
-    if (val1 === null && val2 === undefined) {
-        return false;
+  if (typeof val1 === 'undefined' && typeof val2 === 'undefined') {
+    return true;
+  }
+
+  if (typeof val1 === 'number' && typeof val2 === 'number') {
+    if (isNaN(val1) && isNaN(val2)) {
+      return true;
     }
+    return val1 === val2;
+  }
 
-    if (val1 === undefined && val2 === null) {
-        return false;
-    }
-
-    val1 = (typeof val1 === 'number') ? val1 : objectSort(val1);
-    val2 = (typeof val2 === 'number') ? val2 : objectSort(val2);
-
-    if (val1 === val2) {
-        return true;
-    }
-
-    if ((typeof val1 !== 'object') && (typeof val2 !== 'object') && isNaN(val1) && isNaN(val2)) {
-        return true;
-    }
-
-    if (val1 == null || val2 == null || typeof(val1) != 'object' || typeof(val2) != 'object') {
-        return false;
-    }
-
-    for (let prop in val1) {
-        val1Prop += 1;
-    }
-
-    for (let prop in val2) {
-        val2Prop += 1;
-        if (!(prop in val1) || !deepComp(val1[prop], val2[prop])) {
-            return false;
+  if (Array.isArray(val1) && Array.isArray(val2)) {
+    if (val1.length != val2.length) {
+      return false;
+    } else {
+      for (let i = 0; i < val1.length; i++) {
+        if (val1[i] != val2[i]) {
+          return false
         }
+      }
+      return true;
     }
+  }
 
+  if (typeof val1 === 'object' && typeof val2 === 'object') {
+    if (val1 === null && val2 === null) {
+      return true;
+    } else {
+      let valProperty1 = 0;
+      let valProperty2 = 0;
 
-    function objectSort(obj) {
-        let sortable = [];
-        let result = {};
+      val1 = objectSort(val1);
+      val2 = objectSort(val2);
 
-        for (let item in obj) {
-            sortable.push([item, obj[item]]);
+      for (let prop in val1) {
+        valProperty1 += 1;
+      }
+
+      for (let prop in val2) {
+        valProperty2 += 1;
+
+        if (!(prop in val1) || !(deepComp(val1[prop], val2[prop]))) {
+          return false;
         }
+      }
 
-        sortable.sort(function(a, b) {
-            if (a[0] != Number && b[0] != Number) {
-                return a[0].charCodeAt(0) - b[0].charCodeAt(0);
-            }
-            return a[0] - b[0];
-        });
-
-        sortable.forEach(item => {
-            result[item[0]] = item[1];
-        });
-        return result;
+      return valProperty1 == valProperty2;
     }
-    return val1Prop == val2Prop;
+
+
+  }
+
+  return val1 === val2;
+
+  function objectSort(obj) {
+    let sortable = [];
+    let result = {};
+
+    for (let item in obj) {
+      sortable.push([item, obj[item]]);
+    }
+
+    sortable.sort(function (a, b) {
+      if (a[0] != Number && b[0] != Number) {
+        return a[0].charCodeAt(0) - b[0].charCodeAt(0);
+      }
+      return a[0] - b[0];
+    });
+
+    sortable.forEach(item => {
+      result[item[0]] = item[1];
+    });
+    return result;
+  }
 }
 
 var H1 = { a: 5, b: { b1: 6, b2: 7 } };
@@ -73,6 +89,8 @@ var H10 = { a: 5 };
 var A1 = [5, 7];
 var A2 = [5, 5, 7];
 var A3 = [5, 8, 7];
+
+// deepComp(H1, H2);
 
 
 // console.log(deepComp({ b1: 6}, { b1: 66}));
