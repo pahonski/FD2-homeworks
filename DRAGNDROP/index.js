@@ -19,9 +19,9 @@ window.addEventListener('load', function () {
 
       if(e.target.tagName === 'IMG') {
 
-        for(let i = 0; i < images.length; i++) {
-          images[i].style.zIndex = '';
-        }
+        // for(let i = 0; i < images.length; i++) {
+        //   images[i].style.zIndex = '';
+        // }
         elem = e.target;
         elem.style.zIndex = ++index;
       }
