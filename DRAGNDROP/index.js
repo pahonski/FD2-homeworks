@@ -31,9 +31,8 @@ window.addEventListener('load', function () {
       e=e||window.event;
       e.preventDefault();
 
-      if(elem) {
-        elem.style.left = e.pageX - mouseX + 'px';
-        elem.style.top = e.pageY - mouseY + 'px';
+      if (e.target.tagName === 'IMG') {
+        e.target.style.cursor = 'move';
       }
 
     });
@@ -41,6 +40,10 @@ window.addEventListener('load', function () {
 
     container.addEventListener('mouseup', function (e) {
       e=e||window.event;
+      if(elem) {
+        elem.style.left = e.pageX - mouseX + 'px';
+        elem.style.top = e.pageY - mouseY + 'px';
+      }
       elem = null;
     });
 
@@ -54,12 +57,6 @@ window.addEventListener('load', function () {
         let top = image.offsetTop;
         image.style.left = left + 'px';
         image.style.top = top + 'px';
-
-        image.addEventListener('mousemove', function (e) {
-          e=e||window.event;
-          this.style.cursor = 'move';
-        });
-
       }
 
       for(let i = 0; i < img.length; i++) {
