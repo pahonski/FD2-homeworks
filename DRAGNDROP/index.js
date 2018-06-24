@@ -5,6 +5,7 @@ window.addEventListener('load', function () {
     let container = document.querySelector('.container');
     let elem;
     let mouseX, mouseY;
+    let index = 0;
 
     renderAbsoluteImg(images);
 
@@ -19,10 +20,10 @@ window.addEventListener('load', function () {
       if(e.target.tagName === 'IMG') {
 
         for(let i = 0; i < images.length; i++) {
-          images[i].style.zIndex = 1;
+          images[i].style.zIndex = '';
         }
         elem = e.target;
-        elem.style.zIndex = 25;
+        elem.style.zIndex = ++index;
       }
 
     });
