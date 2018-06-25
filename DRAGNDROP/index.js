@@ -10,6 +10,14 @@ window.addEventListener('load', function () {
     renderAbsoluteImg(images);
 
 
+    container.addEventListener('mouseover', function (e) {
+        e=e||window.event;
+        if(e.target.tagName === 'IMG') {
+          e.target.style.cursor = 'move';
+        }
+    });
+
+
     container.addEventListener('mousedown', function (e) {
       e=e||window.event;
       e.preventDefault();
@@ -18,22 +26,19 @@ window.addEventListener('load', function () {
       mouseY = e.clientY - e.target.offsetTop;
 
       if(e.target.tagName === 'IMG') {
-
-        // for(let i = 0; i < images.length; i++) {
-        //   images[i].style.zIndex = '';
-        // }
         elem = e.target;
         elem.style.zIndex = ++index;
-      }
-
-    });
-
-    container.addEventListener('mousemove', function (e) {
-      e=e||window.event;
-      e.preventDefault();
-
-      if (e.target.tagName === 'IMG') {
-        e.target.style.cursor = 'move';
+        elem.addEventListener('mousemove', function (e) {
+            e=e||window.event;
+            e.preventDefault();
+            if (e.target.tagName === 'IMG') {
+                e.target.style.cursor = 'move';
+            }
+            if(elem) {
+                elem.style.left = e.pageX - mouseX + 'px';
+                elem.style.top = e.pageY - mouseY + 'px';
+            }
+        });
       }
 
     });
@@ -41,16 +46,18 @@ window.addEventListener('load', function () {
 
     container.addEventListener('mouseup', function (e) {
       e=e||window.event;
-      if(elem) {
-        elem.style.left = e.pageX - mouseX + 'px';
-        elem.style.top = e.pageY - mouseY + 'px';
-      }
+      elem.removeEventListener('mousemove', function (e) {
+          e=e||window.event;
+          e.preventDefault();
+          if(elem) {
+              elem.style.left = e.pageX - mouseX + 'px';
+              elem.style.top = e.pageY - mouseY + 'px';
+          }
+        });
       elem = null;
     });
 
-
-
-    function renderAbsoluteImg(img) {
+      function renderAbsoluteImg(img) {
 
       for(let i = 0; i < img.length; i++) {
         let image = img[i];
