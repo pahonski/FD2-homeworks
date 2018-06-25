@@ -1,0 +1,60 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.naming label, input[type = 'text'], .radio-buttons, .checkbox-buttons {
+  display: block;
+  padding: 5px;
+  margin-bottom: 3px;
+}
+
+.naming-block {
+  position: relative;
+}
+
+.errors {
+  position: absolute;
+  display: none;
+  top: 5px;
+  left: 660px;
+  width: 350px;
+  height: 25px;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.active-error {
+  display: block;
+}
+
+input[type='checkbox'] {
+  margin-top: 7px;
+}
+
+.top-block {
+  display: flex;
+  flex-direction: row;
+}
+
+.bottom-block {
+  padding: 5px;
+}
+
+.naming, .value {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+}
+
+.value {
+  width: 400px;
+}
+
+.description-h {
+  display: block;
+}
+
+button {
+  margin-left: 5px;
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<form action="http://fe.it-academy.by/TestForm.php" class="form">
+  <div class="top-block">
+    <div class="naming">
+      <div class="naming-block">
+        <label for="developers">Разработчики:</label><div class="errors developers-error">Ошибка</div>
+      </div>
+
+      <div class="naming-block">
+        <label for="site-name">Название сайта:</label><span class="errors site-name-error">Ошибка</span>
+      </div>
+
+      <div class="naming-block">
+        <label for="site-url">URL сайта:</label><span class="errors site-url-error">Ошибка</span>
+      </div>
+
+      <div class="naming-block">
+        <label for="start-date">Дата запуска сайта:</label><span class="errors start-date-error">Ошибка</span>
+      </div>
+
+      <div class="naming-block">
+        <label for="visitors">Посетителей в сутки:</label><span class="errors visitors-error">Ошибка</span>
+      </div>
+
+      <div class="naming-block">
+        <label for="email">E-mail для связи:</label><span class="errors email-error">Ошибка</span>
+      </div>
+
+      <div class="naming-block">
+        <label for="catalog">Рубрика каталога:</label><span class="errors catalog-error">Ошибка</span>
+      </div>
+
+      <div class="naming-block">
+        <label for="accommodations">Размещение:</label><span class="errors accommodations-error">Ошибка</span>
+      </div>
+
+      <div class="naming-block">
+        <label for="reviews">Разрешить отзывы:</label><span class="errors reviews-error">Ошибка</span>
+      </div>
+
+    </div>
+
+    <div class="value">
+      <input type="text" name="developers" id="developers">
+      <input type="text" name="site-name" id="site-name">
+      <input type="text" name="site-url" id="site-url">
+      <input type="text" name="start-date" id="start-date">
+      <input type="text" name="visitors" id="visitors">
+      <input type="text" name="email" id="email">
+      <select name="catalog" id="catalog">
+        <option value="null">Выберите рубрику..</option>
+        <option value="health">здоровье</option>
+        <option value="house">домашний уют</option>
+        <option value="tehnics">техника</option>
+      </select>
+      <div class="radio-buttons" id="accommodations">
+        <label><input class="accommodation" name="accommodation" type="radio" value="free">бесплатное</label>
+        <label><input class="accommodation" name="accommodation" type="radio" value="payed">платное</label>
+        <label><input class="accommodation" name="accommodation" type="radio" value="vip">VIP</label>
+      </div>
+      <div class="checkbox-buttons">
+        <input type="checkbox" id="reviews">
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-block">
+    <label class="description-h" for="description">Разработчики:</label>
+    <textarea name="" id="description" cols="68" rows="10"></textarea>
+  </div>
+
+  <button id="submit">Опубликовать</button>
+
+</form>
+<script src="index.js"></script>
+</body>
+</html>
