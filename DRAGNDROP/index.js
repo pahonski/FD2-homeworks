@@ -9,6 +9,18 @@ window.addEventListener('load', function () {
 
     renderAbsoluteImg(images);
 
+    function myFc(e) {
+      e=e||window.event;
+      e.preventDefault();
+      if (e.target.tagName === 'IMG') {
+        e.target.style.cursor = 'move';
+      }
+      if(elem) {
+        elem.style.left = e.pageX - mouseX + 'px';
+        elem.style.top = e.pageY - mouseY + 'px';
+      }
+    }
+
 
     container.addEventListener('mouseover', function (e) {
         e=e||window.event;
@@ -19,6 +31,9 @@ window.addEventListener('load', function () {
 
 
     container.addEventListener('mousedown', function (e) {
+
+
+
       e=e||window.event;
       e.preventDefault();
 
@@ -28,17 +43,7 @@ window.addEventListener('load', function () {
       if(e.target.tagName === 'IMG') {
         elem = e.target;
         elem.style.zIndex = ++index;
-        elem.addEventListener('mousemove', function (e) {
-            e=e||window.event;
-            e.preventDefault();
-            if (e.target.tagName === 'IMG') {
-                e.target.style.cursor = 'move';
-            }
-            if(elem) {
-                elem.style.left = e.pageX - mouseX + 'px';
-                elem.style.top = e.pageY - mouseY + 'px';
-            }
-        });
+        elem.addEventListener('mousemove',  myFc);
       }
 
     });
@@ -46,14 +51,7 @@ window.addEventListener('load', function () {
 
     container.addEventListener('mouseup', function (e) {
       e=e||window.event;
-      elem.removeEventListener('mousemove', function (e) {
-          e=e||window.event;
-          e.preventDefault();
-          if(elem) {
-              elem.style.left = e.pageX - mouseX + 'px';
-              elem.style.top = e.pageY - mouseY + 'px';
-          }
-        });
+      elem.removeEventListener('mousemove', myFc);
       elem = null;
     });
 
@@ -80,3 +78,15 @@ window.addEventListener('load', function () {
 
 });
 
+//
+// elem.addEventListener('mousemove', function (e) {
+//   e=e||window.event;
+//   e.preventDefault();
+//   if (e.target.tagName === 'IMG') {
+//     e.target.style.cursor = 'move';
+//   }
+//   if(elem) {
+//     elem.style.left = e.pageX - mouseX + 'px';
+//     elem.style.top = e.pageY - mouseY + 'px';
+//   }
+// });
