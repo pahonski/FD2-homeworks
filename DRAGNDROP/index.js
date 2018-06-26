@@ -13,6 +13,7 @@ window.addEventListener('load', function () {
     for(let i = 0; i < images.length; i++) {
       images[i].addEventListener('mouseenter', function (e) {
         elem = e.target;
+        elem.style.cursor = 'move';
         elem.style.zIndex = ++zInd;
         elem.ondragstart = function() {
           return false;
@@ -20,7 +21,6 @@ window.addEventListener('load', function () {
         elem.onmousedown = function (e) {
           mouseX = e.clientX - e.target.offsetLeft;
           mouseY = e.clientY - e.target.offsetTop;
-          console.log(elem);
           moveAt(e);
 
           container.onmousemove = function (e) {
