@@ -12,6 +12,18 @@ window.addEventListener('load', function () {
       "reviews": false
     };
 
+    let tagsHash = {
+      "developers": "developers",
+      "siteName": "site-name",
+      "siteUrl": "site-url",
+      "startDate": "start-date",
+      "visitors": "visitors",
+      "email": "email",
+      "catalog": "catalog",
+      "accommodation": "accommodation",
+      "reviews": "reviews"
+    };
+
     let messages = {
       "developers": ['Требуется ввести название разработчиков'],
       "siteName": ['Требуется ввести название сайта'],
@@ -24,18 +36,20 @@ window.addEventListener('load', function () {
       "reviews": ['Требуется разрешить отзывы']
     };
 
-    let submitButton = document.getElementById('submit');
+    let form = document.querySelector('form');
+
+    let submitButton = document.getElementById('my-submit');
 
     //fields
-    let developers = document.getElementById('developers');
-    let siteName = document.getElementById('site-name');
-    let siteUrl = document.getElementById('site-url');
-    let startDate = document.getElementById('start-date');
-    let visitors = document.getElementById('visitors');
-    let email = document.getElementById('email');
-    let catalogSelect = document.getElementById('catalog');
+    let developers = document.querySelector('.developers');
+    let siteName = document.querySelector('.site-name');
+    let siteUrl = document.querySelector('.site-url');
+    let startDate = document.querySelector('.start-date');
+    let visitors = document.querySelector('.visitors');
+    let email = document.querySelector('.email');
+    let catalogSelect = document.querySelector('.catalog');
     let accommodationsRadio = document.querySelectorAll('.accommodation');
-    let reviewCheckbox = document.getElementById('reviews');
+    let reviewCheckbox = document.querySelector('.reviews');
 
     //errors
     let developersError = document.querySelector('.developers-error');
@@ -167,11 +181,17 @@ window.addEventListener('load', function () {
     submitButton.addEventListener('click', function (e) {
       e = e || window.event;
       e.preventDefault();
-      validateAll();
+      // validateAll();
+      if(validateAll()) {
+        console.log(form);
+        form.submit();
+      }
 
     });
 
     function validateAll() {
+      let validCounter = 0;
+      let counter = 0;
       for(let key in submitHash) {
         switch (key) {
           case "developers":
@@ -247,6 +267,20 @@ window.addEventListener('load', function () {
             }
             break;
         }
+        if(!submitHash[key] && counter < 1) {
+          let field = document.querySelector(`.${tagsHash[key]}`);
+          field.focus();
+          ++counter;
+        }
+        if(submitHash[key]) {
+          validCounter++;
+        }
+      }
+      console.log(validCounter);
+      if(validCounter == 9) {
+        return true;
+      } else {
+        return false;
       }
     }
   }
