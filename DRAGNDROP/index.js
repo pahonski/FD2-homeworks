@@ -14,13 +14,13 @@ window.addEventListener('load', function () {
       images[i].addEventListener('mouseenter', function (e) {
         elem = e.target;
         elem.style.cursor = 'move';
-        elem.style.zIndex = ++zInd;
         elem.ondragstart = function() {
           return false;
         };
         elem.onmousedown = function (e) {
           mouseX = e.clientX - e.target.offsetLeft;
           mouseY = e.clientY - e.target.offsetTop;
+          elem.style.zIndex = ++zInd;
           moveAt(e);
 
           container.onmousemove = function (e) {
