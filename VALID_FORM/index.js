@@ -1,5 +1,12 @@
 window.addEventListener('load', function () {
+  let validation = false;
   function validateForm() {
+
+
+
+    if(validation) {
+      validateForm();
+    }
     let submitHash = {
       "developers": false,
       "siteName": false,
@@ -9,7 +16,8 @@ window.addEventListener('load', function () {
       "email": false,
       "catalog": false,
       "accommodation": false,
-      "reviews": false
+      "reviews": false,
+      "description" : false
     };
 
     let tagsHash = {
@@ -21,7 +29,8 @@ window.addEventListener('load', function () {
       "email": "email",
       "catalog": "catalog",
       "accommodation": "accommodation",
-      "reviews": "reviews"
+      "reviews": "reviews",
+      "description": "description"
     };
 
     let messages = {
@@ -33,7 +42,8 @@ window.addEventListener('load', function () {
       "email": ['Требуется ввести email'],
       "catalog": ['Необходимо выбрать один вариант', 'Выберите что угодно, кроме здоровья'],
       "accommodation": ['Требуется выбрать размещение'],
-      "reviews": ['Требуется разрешить отзывы']
+      "reviews": ['Требуется разрешить отзывы'],
+      "description": ['Требуется что-нибудь ввести']
     };
 
     let form = document.querySelector('form');
@@ -50,6 +60,7 @@ window.addEventListener('load', function () {
     let catalogSelect = document.querySelector('.catalog');
     let accommodationsRadio = document.querySelectorAll('.accommodation');
     let reviewCheckbox = document.querySelector('.reviews');
+    let description = document.querySelector('.description');
 
     //errors
     let developersError = document.querySelector('.developers-error');
@@ -61,6 +72,7 @@ window.addEventListener('load', function () {
     let catalogError = document.querySelector('.catalog-error');
     let accommodationsError = document.querySelector('.accommodations-error');
     let reviewsError = document.querySelector('.reviews-error');
+    let descriptionError = document.querySelector('.description-error');
 
 
 
@@ -174,6 +186,18 @@ window.addEventListener('load', function () {
       }
     });
 
+    description.addEventListener('blur', function () {
+      if(this.value === '') {
+        console.log('Заполните поле');
+        submitHash.description = false;
+        descriptionError.style.display = 'block';
+        descriptionError.innerHTML = messages.description[0];
+      } else {
+        descriptionError.style.display = '';
+        submitHash.description = true;
+      }
+    });
+
 
 
 
@@ -181,10 +205,10 @@ window.addEventListener('load', function () {
     submitButton.addEventListener('click', function (e) {
       e = e || window.event;
       e.preventDefault();
-      // validateAll();
       if(validateAll()) {
         console.log(form);
         form.submit();
+        validation = true;
       }
 
     });
@@ -195,75 +219,106 @@ window.addEventListener('load', function () {
       for(let key in submitHash) {
         switch (key) {
           case "developers":
-            if(!submitHash[key]) {
+            if(!submitHash[key] && !developers.value) {
               developersError.style.display = 'block';
               developersError.innerHTML = messages.developers[0];
             } else {
               developersError.style.display = '';
+              submitHash.developers = true;
             }
             break;
           case "siteName":
-            if(!submitHash[key]) {
+            if(!submitHash[key] && !siteName.value) {
               siteNameError.style.display = 'block';
               siteNameError.innerHTML = messages.siteName[0];
             } else {
               siteNameError.style.display = '';
+              submitHash.siteName = true;
             }
             break;
           case "siteUrl":
-            if(!submitHash[key]) {
+            if(!submitHash[key] && !siteUrl.value) {
               siteUrlError.style.display = 'block';
               siteUrlError.innerHTML = messages.siteUrl[0];
             } else {
               siteUrlError.style.display = '';
+              submitHash.siteUrl = true;
             }
             break;
           case "startDate":
-            if(!submitHash[key]) {
+            if(!submitHash[key] && !startDate.value) {
               siteDateError.style.display = 'block';
               siteDateError.innerHTML = messages.startDate[0];
             } else {
               siteDateError.style.display = '';
+              submitHash.startDate = true;
             }
             break;
           case "visitors":
-            if(!submitHash[key]) {
+            if(!submitHash[key] && !visitors.value) {
               visitorsError.style.display = 'block';
               visitorsError.innerHTML = messages.visitors[0];
             } else {
               visitorsError.style.display = '';
+              submitHash.visitors = true;
             }
             break;
           case "email":
-            if(!submitHash[key]) {
+            if(!submitHash[key] && !email.value) {
               emailError.style.display = 'block';
               emailError.innerHTML = messages.email[0];
             } else {
               emailError.style.display = '';
+              submitHash.email = true;
             }
             break;
           case "catalog":
-            if(!submitHash[key]) {
+            let value = catalogSelect.options[catalogSelect.selectedIndex].value;
+            if(!submitHash[key] && value === 'null') {
               catalogError.style.display = 'block';
               catalogError.innerHTML = messages.catalog[0];
-            } else {
+            } else if(value === 'health') {
+              submitHash.catalog = false;
+              catalogError.style.display = 'block';
+              catalogError.innerHTML = messages.catalog[1];
+            }
+            else {
               catalogError.style.display = '';
+              submitHash.catalog = true;
             }
             break;
           case "accommodation":
-            if(!submitHash[key]) {
+            let check = false;
+            for(let i = 0; i < accommodationsRadio.length; i++) {
+              if(accommodationsRadio[i].checked) {
+                check = !check;
+                break;
+              }
+            }
+            if(!submitHash[key] && !check) {
               accommodationsError.style.display = 'block';
               accommodationsError.innerHTML = messages.catalog[0];
             } else {
               accommodationsError.style.display = '';
+              submitHash.accommodation = true;
             }
             break;
           case "reviews":
-            if(!submitHash[key]) {
+            if(!submitHash[key] && !reviewCheckbox.checked) {
               reviewsError.style.display = 'block';
               reviewsError.innerHTML = messages.reviews[0];
             } else {
               reviewsError.style.display = '';
+              submitHash.reviews = true;
+            }
+            break;
+          case "description":
+            if(!submitHash[key] && !description.value) {
+              descriptionError.style.display = 'block';
+              descriptionError.innerHTML = messages.description[0];
+            } else {
+              descriptionError.style.display = '';
+              submitHash.description = true;
             }
             break;
         }
@@ -277,7 +332,7 @@ window.addEventListener('load', function () {
         }
       }
       console.log(validCounter);
-      if(validCounter == 9) {
+      if(validCounter == 10) {
         return true;
       } else {
         return false;

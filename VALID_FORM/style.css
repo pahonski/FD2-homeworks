@@ -38,6 +38,7 @@ input[type='checkbox'] {
 }
 
 .bottom-block {
+  position: relative;
   padding: 5px;
 }
 
