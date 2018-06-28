@@ -3,38 +3,38 @@ window.addEventListener('load', function () {
   function dragImages() {
     let images = document.querySelectorAll('.container img');
     let container = document.querySelector('.container');
-    let elem;
     let zInd = 0;
+    let elem;
     let mouseX, mouseY;
-
+    console.log(images);
     renderAbsoluteImg(images);
 
+    container.onmouseover = function (e) {
+      if(e.target.tagName === 'IMG') {
+        e.target.style.cursor = 'move'
+      }
+    };
 
-    for(let i = 0; i < images.length; i++) {
-      images[i].addEventListener('mouseenter', function (e) {
+    container.onmousedown = function (e) {
+      e = e || window.event;
+      mouseX = e.clientX - e.target.offsetLeft;
+      mouseY = e.clientY - e.target.offsetTop;
+      if(e.target.tagName === 'IMG') {
         elem = e.target;
-        elem.style.cursor = 'move';
+        elem.style.zIndex = ++zInd;
         elem.ondragstart = function() {
           return false;
         };
-        elem.onmousedown = function (e) {
-          mouseX = e.clientX - e.target.offsetLeft;
-          mouseY = e.clientY - e.target.offsetTop;
-          elem.style.zIndex = ++zInd;
-          moveAt(e);
+      }
+    };
 
-          container.onmousemove = function (e) {
-            moveAt(e);
-          };
+    container.onmousemove = function (e) {
+      moveAt(e);
+    };
 
-          elem.onmouseup = function() {
-            container.onmousemove = null;
-            elem.onmouseup = null;
-          }
-        };
-      });
-    }
-
+    container.onmouseup = function () {
+      elem = '';
+    };
 
 
     function moveAt(e) {
@@ -44,19 +44,19 @@ window.addEventListener('load', function () {
 
     function renderAbsoluteImg(img) {
 
-    for(let i = 0; i < img.length; i++) {
-      let image = img[i];
-      let left = image.offsetLeft;
-      let top = image.offsetTop;
-      image.style.left = left + 'px';
-      image.style.top = top + 'px';
-    }
+      for(let i = 0; i < img.length; i++) {
+        let image = img[i];
+        let left = image.offsetLeft;
+        let top = image.offsetTop;
+        image.style.left = left + 'px';
+        image.style.top = top + 'px';
+      }
 
-    for(let i = 0; i < img.length; i++) {
-      img[i].style.position = 'absolute';
-    }
+      for(let i = 0; i < img.length; i++) {
+        img[i].style.position = 'absolute';
+      }
 
-  }
+    }
 
 
   }
