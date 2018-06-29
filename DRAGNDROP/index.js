@@ -15,7 +15,14 @@ window.addEventListener('load', function () {
       }
     };
 
-    container.onmousedown = function (e) {
+    container.addEventListener('mousedown', myFc);
+
+    container.onmouseup = function () {
+      elem = '';
+      container.removeEventListener('mousemove', moveAt);
+    };
+
+    function myFc(e) {
       e = e || window.event;
       mouseX = e.clientX - e.target.offsetLeft;
       mouseY = e.clientY - e.target.offsetTop;
@@ -26,20 +33,16 @@ window.addEventListener('load', function () {
           return false;
         };
       }
-    };
-
-    container.onmousemove = function (e) {
-      moveAt(e);
-    };
-
-    container.onmouseup = function () {
-      elem = '';
-    };
+      container.addEventListener('mousemove', moveAt);
+    }
 
 
     function moveAt(e) {
-      elem.style.left = e.pageX - mouseX + 'px';
-      elem.style.top = e.pageY - mouseY + 'px';
+      if (elem) {
+        elem.style.left = e.pageX - mouseX + 'px';
+        elem.style.top = e.pageY - mouseY + 'px';
+      }
+
     }
 
     function renderAbsoluteImg(img) {
