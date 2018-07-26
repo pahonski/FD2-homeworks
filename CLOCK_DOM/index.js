@@ -24,6 +24,7 @@ function clock() {
   window.setInterval(
     function(){
       var d = new Date();
+      document.querySelector('.digital-time').innerHTML = d.toLocaleTimeString();
       clockGo(d);
       console.log('hi');
     }

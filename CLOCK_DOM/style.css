@@ -44,6 +44,16 @@ body {
   left: 242px;
 }
 
+.digital-time {
+  position: absolute;
+  top: 110px;
+  left: 202px;
+  font-family:Tahoma, sans-serif;
+  font-size:20px;
+  font-weight:bold;
+  color: black;
+}
+
 .numeral-container {
   position: absolute;
   width: 30px;
