@@ -8,6 +8,8 @@ function clock() {
   var minute = document.querySelector('.minute');
   var second = document.querySelector('.second');
 
+  var d = new Date();
+
   var clockCenterX = clock.offsetLeft + clock.offsetWidth/2;
   var clockCenterY = clock.offsetTop + clock.offsetHeight/2;
 
@@ -19,10 +21,12 @@ function clock() {
   var count = 1;
 
   renderClock();
+  document.querySelector('.digital-time').innerHTML = d.toLocaleTimeString();
+  clockGo(d);
 
   window.setInterval(
     function(){
-      var d = new Date();
+      d = new Date();
       document.querySelector('.digital-time').innerHTML = d.toLocaleTimeString();
       clockGo(d);
       console.log('hi');
