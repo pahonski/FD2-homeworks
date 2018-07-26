@@ -11,11 +11,10 @@ function clock() {
   var clockCenterX = clock.offsetLeft + clock.offsetWidth/2;
   var clockCenterY = clock.offsetTop + clock.offsetHeight/2;
 
-  var circle = 360;
   var radius = 170;
   var angle = 150;
-  var numContainerWidth = 30; //Временная мера
-  var numContainerHeight = 30; //Временная мера
+  var numContainerWidth = 30;
+  var numContainerHeight = 30;
 
   var count = 1;
 
@@ -60,9 +59,9 @@ function clock() {
   }
 
   function clockGo(d) {
-    var t_sec = 6*d.getSeconds();  //Определяем угол для секунд
-    var t_min = 6*(d.getMinutes() + (1/60)*d.getSeconds()); //Определяем угол для минут
-    var t_hour = 30*(d.getHours() + (1/60)*d.getMinutes());  //Определяем угол для часов
+    var t_sec = 6*d.getSeconds();
+    var t_min = 6*(d.getMinutes() + (1/60)*d.getSeconds());
+    var t_hour = 30*(d.getHours() + (1/60)*d.getMinutes());
     second.style.transform = "rotate(" + t_sec +"deg)";
     minute.style.transform = "rotate(" + t_min +"deg)";
     hour.style.transform = "rotate(" + t_hour +"deg)";
