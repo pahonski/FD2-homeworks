@@ -9,11 +9,13 @@
   <title>CLOCK_SVG</title>
 </head>
 <body>
+  <div class="digital-time"></div>
   <svg class="clock" width="500" height="500" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="250" cy="250" r="250" fill="yellow"></circle>
-    <line class="hour"></line>
-    <!--<svg class="minute"></svg>-->
-    <!--<svg class="second"></svg>-->
+    <circle cx="250" cy="250" r="250" fill="#FCCA66"></circle>
+    <circle cx="250" cy="250" r="15" fill="black"></circle>
+    <line class="hour" x1="255" y1="250" x2="255" y2="200"></line>
+    <line class="minute" x1="255" y1="250" x2="255" y2="160"></line>
+    <line class="second" x1="255" y1="250" x2="255" y2="120"></line>
   </svg>
   <script src="index.js"></script>
 </body>

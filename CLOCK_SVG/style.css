@@ -29,16 +29,16 @@ body {
 
 }
 
-.clock::after {
-  content: "";
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  background-color: black;
-  border-radius: 50%;
-  top: 242px;
-  left: 242px;
-}
+/*.clock::after {*/
+  /*content: "";*/
+  /*position: absolute;*/
+  /*width: 16px;*/
+  /*height: 16px;*/
+  /*background-color: black;*/
+  /*border-radius: 50%;*/
+  /*top: 242px;*/
+  /*left: 242px;*/
+/*}*/
 
 .digital-time {
   position: absolute;
@@ -51,39 +51,23 @@ body {
 }
 
 .numeral-container {
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: #48b382;
-  text-align: center;
-  padding-top: 5px;
 }
 
 .hour {
   stroke: black;
-  stroke-width: 10;
-  position: absolute;
-
+  stroke-width: 10px;
 }
 
 .minute {
-  position: absolute;
-  width: 6px;
-  height: 100px;
-  border-radius: 25px;
-  background-color: black;
+  stroke: black;
+  stroke-width: 6px;
 }
 
 .second {
-  position: absolute;
-  width: 4px;
-  height: 150px;
-  border-radius: 25px;
-  background-color: black;
-  /*animation: rotate 60s infinite linear;*/
+  stroke: black;
+  stroke-width: 4px;
 }
 
 .hour, .second, .minute {
-  transform-origin: 50% 100%;
+  transform-origin: 255px 50%;
 }

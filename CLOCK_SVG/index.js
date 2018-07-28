@@ -13,6 +13,7 @@ function clock() {
   var clockCenterX = clock.offsetLeft + clock.offsetWidth/2;
   var clockCenterY = clock.offsetTop + clock.offsetHeight/2;
 
+  var center = 270;
   var radius = 170;
   var angle = 150;
   var numContainerWidth = 30;
@@ -35,30 +36,30 @@ function clock() {
 
   function renderClock() {
 
-    console.log(clockCenterX - hour.offsetWidth/2);
-
-    hour.setAttribute("y1", "0");
-    hour.setAttribute("x1", clockCenterX - hour.offsetWidth/2 + " ");
-
-    hour.style.top = clockCenterY - hour.offsetHeight + 'px';
-
-    minute.style.left = clockCenterX - minute.offsetWidth/2 + 'px';
-    minute.style.top = clockCenterY - minute.offsetHeight + 'px';
-
-    second.style.left = clockCenterX - second.offsetWidth/2 + 'px';
-    second.style.top = clockCenterY - second.offsetHeight + 'px';
-    console.log(clockCenterY - second.offsetHeight/2 + 'px');
-
     while (count <= 12 && angle >= -180) {
-      var numeral = document.createElement('div');
-      var numeralCenterX = clockCenterX + radius * Math.sin(angle/180*Math.PI);
-      var numeralCenterY = clockCenterY + radius * Math.cos(angle/180*Math.PI);
-      numeral.classList.add('numeral-container');
-      numeral.textContent = count;
-      numeral.style.left = Math.round(numeralCenterX-numContainerWidth/2)+'px';
-      numeral.style.top = Math.round(numeralCenterY-numContainerHeight/2)+'px';
+      var g = document.createElementNS("http://www.w3.org/2000/svg",'g');
+      var numeral = document.createElementNS("http://www.w3.org/2000/svg",'circle');
+      var text = document.createElementNS("http://www.w3.org/2000/svg",'text');
+      numeral.setAttribute("r", "15");
+      numeral.setAttribute("fill", "#48B382");
 
-      clock.appendChild(numeral);
+      var numeralCenterX = center + radius * Math.sin(angle/180*Math.PI);
+      var numeralCenterY = center + radius * Math.cos(angle/180*Math.PI);
+      numeral.classList.add('numeral-container');
+
+      numeral.setAttribute("cx", Math.round(numeralCenterX-numContainerWidth/2));
+      numeral.setAttribute("cy", Math.round(numeralCenterY-numContainerHeight/2));
+
+      text.setAttribute("x", Math.round(numeralCenterX-numContainerWidth/2));
+      text.setAttribute("y", Math.round(numeralCenterY + 5 - numContainerHeight/2));
+      text.setAttribute("text-anchor", "middle");
+      text.setAttribute("stroke", "black");
+      text.setAttribute("stroke-width", "1px");
+      text.innerHTML = count;
+
+      g.appendChild(numeral);
+      g.appendChild(text);
+      clock.appendChild(g);
 
       count++;
       angle -= 30;
