@@ -51,6 +51,10 @@ class Moving {
       DOWN: 40,
       UP: 38
     };
+    this.score = {
+      first: 0,
+      second: 0
+    };
 
     this.leftRacketSettings = {
       racketX: this.leftRacket.offsetLeft,
@@ -80,8 +84,8 @@ class Moving {
     this.ballH={
       posX : this.ball.offsetLeft,
       posY : this.ball.offsetTop,
-      speedX : 1.5,
-      speedY : 0.5,
+      speedX : 3.5,
+      speedY : 1.5,
       accelX : 0,
       accelY : 0,
       width : 20,
@@ -94,15 +98,38 @@ class Moving {
     };
 
     window.addEventListener('keydown', (e)=> {
-      this.keyStatus = true;
       this.keydown = e.keyCode;
     });
 
     window.addEventListener('keyup', ()=> {
       this.keydown = null;
-      this.keyStatus = false;
     });
 
+  }
+
+  randomAngleBall() {
+
+  }
+
+  goal(side) {
+    let first = document.querySelector('.first-player');
+    let second = document.querySelector('.second-player');
+    if(side === 'left') {
+      this.score.first += 1;
+      first.innerHTML = this.score.first.toString();
+    } else {
+      this.score.second += 1;
+      second.innerHTML = this.score.second.toString();
+    }
+  }
+
+  resetScore() {
+    let scoreFields = document.querySelectorAll('.score span');
+    this.score.first = 0;
+    this.score.second = 0;
+    scoreFields.forEach(function (item) {
+      item.innerHTML = '0';
+    })
   }
 
   tick() {
@@ -144,6 +171,7 @@ class Moving {
     }
     // вылетел ли мяч правее стены?
     if ( this.ballH.posX+this.ballH.width>this.area.width ) {
+      this.goal('right');
       this.ballH.speedX=-this.ballH.speedX;
       this.ballH.posX=this.area.width-this.ballH.width;
     }
@@ -155,6 +183,7 @@ class Moving {
     }
     // вылетел ли мяч левее стены?
     if ( this.ballH.posX<0 ) {
+      this.goal('left');
       this.ballH.speedX=-this.ballH.speedX;
       this.ballH.posX=0;
     }
@@ -176,10 +205,11 @@ class Moving {
     this.ballH.update();
     this.leftRacketSettings.update();
     this.rightRacketSettings.update();
-    requestAnimationFrame(this.tick.bind(this));
+    this.timerStatus = requestAnimationFrame(this.tick.bind(this));
   }
 
   go() {
+    this.resetScore();
     if(this.timerStatus) {
       console.log('Таймер существует', this.timerStatus);
       cancelAnimationFrame(this.timerStatus);
