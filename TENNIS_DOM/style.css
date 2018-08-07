@@ -1,0 +1,49 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.score {
+  display: inline-block;
+  margin-left: 200px;
+}
+
+.board {
+  position: relative;
+  width: 550px;
+  height: 380px;
+  background-color: lightgoldenrodyellow;
+  border: 1px solid lightcoral;
+}
+
+.left-racket {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 10px;
+  height: 60px;
+  background-color: lightseagreen;
+  /*transition: all 0.10s ease-in-out;*/
+  /*transform: translateZ(0);*/
+}
+
+.right-racket {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 10px;
+  height: 60px;
+  background-color: lightsalmon;
+}
+.ball {
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  background-color: #000;
+
+}
