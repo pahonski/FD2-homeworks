@@ -56,6 +56,12 @@ class Moving {
       second: 0
     };
 
+    this.ballSpeeds = {
+      x: 4,
+      y: 1.5,
+      step: 0
+    };
+
     this.leftRacketSettings = {
       racketX: this.leftRacket.offsetLeft,
       racketY: this.leftRacket.offsetTop,
@@ -107,8 +113,29 @@ class Moving {
 
   }
 
-  randomAngleBall() {
-
+  reverseSpeed() {
+    switch (this.ballSpeeds.step) {
+      case 0:
+        this.ballH.speedX = this.ballSpeeds.x;
+        this.ballH.speedY = this.ballSpeeds.y;
+        this.ballSpeeds.step += 1;
+        break;
+      case 1:
+        this.ballH.speedX = -this.ballSpeeds.x;
+        this.ballH.speedY = this.ballSpeeds.y;
+        this.ballSpeeds.step += 1;
+        break;
+      case 2:
+        this.ballH.speedX = this.ballSpeeds.x;
+        this.ballH.speedY = -this.ballSpeeds.y;
+        this.ballSpeeds.step += 1;
+        break;
+      case 3:
+        this.ballH.speedX = -this.ballSpeeds.x;
+        this.ballH.speedY = -this.ballSpeeds.y;
+        this.ballSpeeds.step = 0;
+        break;
+    }
   }
 
   goal(side) {
@@ -117,10 +144,12 @@ class Moving {
     if(side === 'left') {
       this.score.first += 1;
       first.innerHTML = this.score.first.toString();
-    } else {
+    } else if (side === 'right') {
       this.score.second += 1;
       second.innerHTML = this.score.second.toString();
     }
+    cancelAnimationFrame(this.timerStatus);
+    this.timerStatus = 0;
   }
 
   resetScore() {
@@ -171,9 +200,12 @@ class Moving {
     }
     // вылетел ли мяч правее стены?
     if ( this.ballH.posX+this.ballH.width>this.area.width ) {
+      // this.ballH.speedX=-this.ballH.speedX;
       this.goal('right');
-      this.ballH.speedX=-this.ballH.speedX;
       this.ballH.posX=this.area.width-this.ballH.width;
+      this.ballH.speedX = 0;
+      this.ballH.speedY = 0;
+
     }
 
     // долетел ли мяч до левой ракетки
@@ -184,11 +216,12 @@ class Moving {
     // вылетел ли мяч левее стены?
     if ( this.ballH.posX<0 ) {
       this.goal('left');
-      this.ballH.speedX=-this.ballH.speedX;
       this.ballH.posX=0;
+      this.ballH.speedX = 0;
+      this.ballH.speedY = 0;
     }
 
-    this.ballH.speedY+=this.ballH.accelY;
+    // this.ballH.speedY+=this.ballH.accelY;
     this.ballH.posY+=this.ballH.speedY;
 
     // вылетел ли мяч ниже пола?
@@ -209,7 +242,9 @@ class Moving {
   }
 
   go() {
-    this.resetScore();
+    this.ballH.posX=this.area.width / 2 - this.ballH.width / 2;
+    this.ballH.posY=this.area.height / 2 - this.ballH.height / 2;
+    this.reverseSpeed();
     if(this.timerStatus) {
       console.log('Таймер существует', this.timerStatus);
       cancelAnimationFrame(this.timerStatus);
