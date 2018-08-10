@@ -57,15 +57,15 @@ class Moving {
     };
 
     this.ballSpeeds = {
-      x: 4,
-      y: 1.5,
+      x: 1.5,
+      y: 1,
       step: 0
     };
 
     this.leftRacketSettings = {
       racketX: this.leftRacket.offsetLeft,
       racketY: this.leftRacket.offsetTop,
-      speed: 5,
+      speed: 0,
       width: this.leftRacket.offsetWidth,
       height: this.leftRacket.offsetHeight,
       update: () => {
@@ -77,7 +77,7 @@ class Moving {
     this.rightRacketSettings = {
       racketX: this.rightRacket.offsetLeft,
       racketY: this.rightRacket.offsetTop,
-      speed: 5,
+      speed: 0,
       width: this.rightRacket.offsetWidth,
       height: this.rightRacket.offsetHeight,
       update: () => {
@@ -90,8 +90,8 @@ class Moving {
     this.ballH={
       posX : this.ball.offsetLeft,
       posY : this.ball.offsetTop,
-      speedX : 3.5,
-      speedY : 1.5,
+      speedX : 1.5,
+      speedY : 1,
       accelX : 0,
       accelY : 0,
       width : 20,
@@ -107,8 +107,17 @@ class Moving {
       this.keydown = e.keyCode;
     });
 
-    window.addEventListener('keyup', ()=> {
+    window.addEventListener('keyup', (e)=> {
       this.keydown = null;
+      if(e.keyCode === this.keyValues.SHIFT || e.keyCode === this.keyValues.CTRL) {
+        this.leftRacketSettings.speed = 0;
+      }
+
+    if(e.keyCode === this.keyValues.UP || e.keyCode === this.keyValues.DOWN) {
+      this.rightRacketSettings.speed = 0;
+    }
+
+
     });
 
   }
@@ -164,30 +173,34 @@ class Moving {
   tick() {
     switch (this.keydown) {
       case this.keyValues.SHIFT:
-        this.leftRacketSettings.racketY -= this.leftRacketSettings.speed;
-        if ( this.leftRacketSettings.racketY < 0 ) {
-          this.leftRacketSettings.racketY = 0;
-        }
+        this.leftRacketSettings.speed = -5;
         break;
       case this.keyValues.CTRL:
-        this.leftRacketSettings.racketY += this.leftRacketSettings.speed;
-        if ( this.leftRacketSettings.racketY + this.leftRacketSettings.height > this.area.height ) {
-          this.leftRacketSettings.racketY = this.area.height - this.leftRacketSettings.height - 2;
-        }
+        this.leftRacketSettings.speed = 5;
         break;
       case this.keyValues.UP:
-        this.rightRacketSettings.racketY -= this.rightRacketSettings.speed;
-        if ( this.rightRacketSettings.racketY < 0 ) {
-          this.rightRacketSettings.racketY = 0;
-        }
+        this.rightRacketSettings.speed = -5;
+
         break;
       case this.keyValues.DOWN:
-        this.rightRacketSettings.racketY += this.rightRacketSettings.speed;
-        if ( this.rightRacketSettings.racketY + this.rightRacketSettings.height > this.area.height ) {
-          this.rightRacketSettings.racketY = this.area.height - this.rightRacketSettings.height - 2;
-        }
+        this.rightRacketSettings.speed = 5;
         break;
     }
+    if ( this.leftRacketSettings.racketY < 0 ) {
+      this.leftRacketSettings.racketY = 0;
+    }
+    if ( this.leftRacketSettings.racketY + this.leftRacketSettings.height > this.area.height ) {
+      this.leftRacketSettings.racketY = this.area.height - this.leftRacketSettings.height - 2;
+    }
+    if ( this.rightRacketSettings.racketY < 0 ) {
+      this.rightRacketSettings.racketY = 0;
+    }
+    if ( this.rightRacketSettings.racketY + this.rightRacketSettings.height > this.area.height ) {
+      this.rightRacketSettings.racketY = this.area.height - this.rightRacketSettings.height - 2;
+    }
+
+    this.leftRacketSettings.racketY += this.leftRacketSettings.speed;
+    this.rightRacketSettings.racketY += this.rightRacketSettings.speed;
 
     this.ballH.speedX+=this.ballH.accelX;
     this.ballH.posX+=this.ballH.speedX;
