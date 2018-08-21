@@ -38,16 +38,4 @@ function LocStorage(name) {
     });
     return keysArray;
   };
-
-  this.deleteFromLocal = function (key) {
-    localStorage.removeItem(name);
-    this.locHash.data.forEach(function (item, index) {
-      if (item.header === key) {
-        that.locHash.data.splice(index, 1);
-      }
-    });
-    localStorage.setItem(name, JSON.stringify(this.locHash));
-  }
-
-
 }
