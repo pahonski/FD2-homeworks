@@ -8,17 +8,6 @@ let foodValue = '';
 let drinkStorage = new LocStorage("drinks");
 let foodStorage = new LocStorage('food');
 
-if(localStorage.length > 0) {
-  if(localStorage.getItem("drinks")) {
-    drinkStorage.locHash = JSON.parse(localStorage.getItem("drinks"));
-  }
-
-  if(localStorage.getItem("food")) {
-    foodStorage.locHash = JSON.parse(localStorage.getItem("food"));
-  }
-}
-
-
 
 //drink
 

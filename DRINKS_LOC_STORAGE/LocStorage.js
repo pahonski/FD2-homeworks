@@ -1,5 +1,9 @@
 function LocStorage(name) {
   this.locHash = {"data": []};
+  if(localStorage.getItem(name)) {
+    this.locHash = JSON.parse(localStorage.getItem(name));
+  }
+
   let that = this;
 
   this.addValue = function (key, value) {
