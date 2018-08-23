@@ -1,0 +1,99 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0 auto;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+.point {
+  position: absolute;
+  background-color: red;
+  border-radius: 50%;
+  width: 5px;
+  height: 5px;
+  left: 125px;
+  top: 125px;
+}
+
+.container {
+  display: flex;
+
+}
+
+.clock {
+  position: relative;
+  background-color: #FCCA66;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+}
+
+.clock::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-color: black;
+  border-radius: 50%;
+  top: 116px;
+  left: 116px;
+}
+
+.digital-time {
+  position: absolute;
+  top: 110px;
+  left: 202px;
+  font-family:Tahoma, sans-serif;
+  font-size:20px;
+  font-weight:bold;
+  color: black;
+}
+
+.numeral-container {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #48b382;
+  text-align: center;
+  padding-top: 5px;
+}
+
+.hour {
+  position: absolute;
+  width: 6px;
+  height: 30px;
+  border-radius: 25px;
+  background-color: black;
+}
+
+.minute {
+  position: absolute;
+  width: 4px;
+  height: 50px;
+  border-radius: 25px;
+  background-color: black;
+}
+
+.second {
+  position: absolute;
+  width: 2px;
+  height: 60px;
+  border-radius: 25px;
+  background-color: black;
+  /*animation: rotate 60s infinite linear;*/
+}
+
+.hour, .second, .minute {
+  transform-origin: 50% 100%;
+}
