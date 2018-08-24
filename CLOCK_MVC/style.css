@@ -96,3 +96,22 @@ body {
 .hour, .second, .minute {
   transform-origin: 50% 100%;
 }
+
+.hour-svg {
+  stroke: black;
+  stroke-width: 6px;
+}
+
+.minute-svg {
+  stroke: black;
+  stroke-width: 4px;
+}
+
+.second-svg {
+  stroke: black;
+  stroke-width: 2px;
+}
+
+.hour-svg, .second-svg, .minute-svg {
+  transform-origin: 50% 50%;
+}

@@ -53,21 +53,21 @@ body {
 .numeral-container {
 }
 
-.hour {
+.hour-svg {
   stroke: black;
   stroke-width: 10px;
 }
 
-.minute {
+.minute-svg {
   stroke: black;
   stroke-width: 6px;
 }
 
-.second {
+.second-svg {
   stroke: black;
   stroke-width: 4px;
 }
 
-.hour, .second, .minute {
+.hour-svg, .second-svg, .minute-svg {
   transform-origin: 255px 50%;
 }

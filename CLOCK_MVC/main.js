@@ -18,11 +18,21 @@ window.addEventListener('load', function () {
   clockDom2.start(clock2, container, 2);
   controller2.start(clock2, 2);
 
-  let clock3 = new Clock('Минск', '3');
-  let clockDom3 = new ClockViewDOM();
-  let controller3 = new ClockControllerButtons();
+  let clockSvg = new Clock('Берлин', '3');
+  let clockDomSvg = new ClockViewSVG();
+  let controllerSvg = new ClockControllerButtons();
 
-  clock3.start(clockDom3);
-  clockDom3.start(clock3, container, 3);
-  controller3.start(clock3, 3);
+  clockSvg.start(clockDomSvg);
+  clockDomSvg.start(clockSvg, container, 3);
+  controllerSvg.start(clockSvg, 3);
+  // clockDomSvg.render();
+
+  let clockSvg2 = new Clock('Токио', '7');
+  let clockDomSvg2 = new ClockViewSVG();
+  let controllerSvg2 = new ClockControllerButtons();
+
+  clockSvg2.start(clockDomSvg2);
+  clockDomSvg2.start(clockSvg2, container, 4);
+  controllerSvg2.start(clockSvg2, 4);
+
 });
