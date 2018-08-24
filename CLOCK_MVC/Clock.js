@@ -4,25 +4,11 @@ class Clock {
     this.time = time;
     this.view = null;
 
-    this.count = 1;
-    this.radius = 85;
-    this.angle = 150;
-    this.numContainerWidth = 30;
-    this.numContainerHeight = 30;
-
     this.d = new Date();
     this.youTimeZone = this.d.getTimezoneOffset();
-    console.log(this.youTimeZone);
-
-    this.t_sec = null;
-    this.t_min = null;
-    this.t_hour = null;
 
     this.timer = null;
-
-    this.clockGo(this.timeConvertor());
-
-  }
+    }
 
   timeConvertor() {
     let minskTime = this.youTimeZone * 60 * 1000;
@@ -33,28 +19,16 @@ class Clock {
     }
 
   start(view) {
-    this.updateView();
-    let that = this;
     this.view = view;
-    this.timer = window.setInterval(
-      function(){
-        this.d = that.timeConvertor();
-        that.clockGo(d);
-        that.updateView();
-      }
-      , 500);
+    this.view.clockGo(this.timeConvertor());
+    this.updateView();
+    this.timerStart();
   }
 
   updateView() {
     if(this.view) {
-      this.view.update();
+      this.view.update(this.timeConvertor());
     }
-  }
-
-  clockGo(d) {
-    this.t_sec = 6*d.getSeconds();
-    this.t_min = 6*(d.getMinutes() + (1/60)*d.getSeconds());
-    this.t_hour = 30*(d.getHours() + (1/60)*d.getMinutes());
   }
 
   timerStop() {
@@ -66,7 +40,6 @@ class Clock {
     this.timer = window.setInterval(
       function(){
         this.d = that.timeConvertor();
-        that.clockGo(d);
         that.updateView();
       }
       , 500);
