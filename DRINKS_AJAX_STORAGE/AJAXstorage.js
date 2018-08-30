@@ -9,6 +9,7 @@ function AjaxStorage(local) {
   this.emptyId = '';
   this.userData = '';
   this.currentId = '';
+  this.searchID = false;
 
   let that = this;
 
@@ -22,10 +23,10 @@ function AjaxStorage(local) {
   //     data: {
   //       f: 'READ', n: this.stringName
   //     },
-  //     success: function (callresult) {
+  //      success: function (callresult) {
   //       that.emptyId = JSON.parse(callresult.result).length;
-  //       that.showId(that.emptyId);
   //       console.log(that.showId(that.emptyId));
+  //       that.showId(that.emptyId);
   //       },
   //     error: that.ajaxErr
   //   });
@@ -63,13 +64,11 @@ function AjaxStorage(local) {
       console.log('Вызов, если ресулт не пустой', JSON.parse(callresult.result));
       if (Array.isArray(JSON.parse(callresult.result))) {
         console.log('Внутри');
-        this.emptyId = JSON.parse(callresult.result).length;
-        console.log(this.emptyId);
+        this.currentId = this.locStorage.id;
+        console.log(this.currentId);
         this.changeBase();
       }
     } else if (callresult.result === "") {
-      this.emptyId = 0;
-      this.locStorage.id = this.emptyId;
       if (localStorage.getItem(this.locStorage.getName())) {
         console.log('Зашли к лок стораж');
         this.userData = localStorage.getItem(this.locStorage.getName());
@@ -158,22 +157,26 @@ function AjaxStorage(local) {
       a = JSON.parse(a);
       console.log(a);
       console.log('Пришедшая дб',this.dataBase, 'id', a.id);
-      if(a.id !== '') {
-        console.log('у меня есть ID!!!!');
-        let id = a.id;
-        this.dataBase.forEach((item) => {
-          if(item.id = id) {
-            this.currentId = id;
-            console.log('ID НАЙДЕН!')
+
+      console.log('у меня есть ID!!!!');
+      this.dataBase.forEach((item) => {
+        this.searchID = false;
+        if(item.id = this.currentId) {
+          this.searchID = true;
+          console.log('ID НАЙДЕН!');
+          return;
+        }
+      });
+
+
+      if(this.searchID === true) {
+        console.log('если id найден');
+        that.dataBase.forEach((item) => {
+          if(item.id = this.currentId) {
+            item.data.push(that.userData);
           }
         });
-      }
-
-      if(this.currentId) {
-        console.log('если id найден')
-        let userArray = that.dataBase[this.currentId].data;
-        console.log('USER ARRAY', userArray);
-        userArray[0] = (that.userData.data);
+        // userArray[0] = (that.userData.data);
       } else {
         console.log('если id не найден');
         that.userData.id = this.emptyId;

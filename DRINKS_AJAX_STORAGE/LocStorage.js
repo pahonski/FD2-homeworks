@@ -1,12 +1,14 @@
 function LocStorage(name) {
   let that = this;
-  this.id = '';
-  console.log(this.locHash = JSON.parse(localStorage.getItem(name)));
+  this.id = randomDiap(999999999999, 1);
+  this.locHash = {"id": this.id, "data": []};
+
   if(localStorage.getItem(name)) {
     this.locHash = JSON.parse(localStorage.getItem(name));
+  }
 
-  } else {
-    this.locHash = {"id": this.id, "data": []};
+  function randomDiap(n,m) {
+    return Math.floor(Math.random()*(m-n+1))+n;
   }
 
   this.getName = function () {
@@ -15,7 +17,9 @@ function LocStorage(name) {
 
   this.addValue = function (key, value) {
     this.locHash.data.push({"header": key, "description": value});
+    console.log(this.id);
     this.locHash.id = this.id;
+    console.log('pered dobavleniem', this.locHash);
     localStorage.setItem(name, JSON.stringify(this.locHash));
     console.log(this.locHash);
     // this.storage[key] = value;

@@ -8,7 +8,8 @@ let foodValue = '';
 
 let drinkStorage = new LocStorage("drinks");
 let drinkAjax = new AjaxStorage(drinkStorage);
-// drinkAjax.clearBase();
+
+//drinkAjax.clearBase();
 
 
 let foodStorage = new LocStorage('food');
