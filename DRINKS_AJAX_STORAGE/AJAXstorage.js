@@ -41,7 +41,8 @@ function AjaxStorage(local) {
   this.addNewUser = function (data) {
     let that = this;
     this.userData = data;
-    // this.dataBase.push(this.userData);
+    console.log(this.userData);
+    this.dataBase.push(this.userData);
     $.ajax({
       url: this.server,
       type: 'POST',
@@ -57,6 +58,7 @@ function AjaxStorage(local) {
 
   this.readReady = function (callresult) {
     let that = this;
+    this.currentId = this.locStorage.id;
 
     if (callresult.error != undefined) {
       alert(callresult.error);
@@ -64,7 +66,6 @@ function AjaxStorage(local) {
       console.log('Вызов, если ресулт не пустой', JSON.parse(callresult.result));
       if (Array.isArray(JSON.parse(callresult.result))) {
         console.log('Внутри');
-        this.currentId = this.locStorage.id;
         console.log(this.currentId);
         this.changeBase();
       }
@@ -73,15 +74,13 @@ function AjaxStorage(local) {
         console.log('Зашли к лок стораж');
         this.userData = localStorage.getItem(this.locStorage.getName());
         let data = JSON.parse(this.userData);
-        data.id = this.emptyId;
         data = JSON.stringify(data);
         localStorage.setItem(this.locStorage.getName(), data);
-        that.createBase(that.emptyId, JSON.parse(this.userData));
+        that.createBase();
       } else {
         console.log('Зашли к крейт бейс');
-        that.createBase(that.emptyId, JSON.parse(this.userData));
+        that.createBase();
       }
-
     }
   };
 
@@ -89,14 +88,8 @@ function AjaxStorage(local) {
     alert(statusStr + ' ' + errorStr);
   };
 
-  this.createBase = function (id, data) {
+  this.createBase = function () {
     this.password = Math.random();
-    console.log('Вызван createBase');
-    console.log(this.dataBase);
-    let that = this;
-    data.id = id;
-    this.dataBase.push(data);
-    console.log('zirim', this.dataBase);
     $.ajax({
       url: this.server,
       type: 'POST',
@@ -112,7 +105,10 @@ function AjaxStorage(local) {
 
   this.createReady = function (callresult) {
     console.log('зашли в CREATE реди', callresult);
-    console.log('create ready', this.dataBase);
+    console.log('create ready', that.dataBase);
+    // that.dataBase.push(that.userData);
+    let result = JSON.stringify(that.dataBase);
+    console.log('result', result, 'database', that.dataBase);
     if (callresult.error != undefined)
       alert(callresult.error);
     else {
@@ -122,7 +118,7 @@ function AjaxStorage(local) {
         cache: false,
         dataType: 'json',
         data: {
-          f: 'UPDATE', n: that.stringName, v: JSON.stringify(that.dataBase), p: that.password
+          f: 'UPDATE', n: that.stringName, v: result, p: that.password
         },
         success: that.updateReady,
         error: that.ajaxErr
@@ -203,7 +199,7 @@ function AjaxStorage(local) {
   };
 
   this.updateReady = function (callresult) {
-    console.log(callresult);
+    console.log(callresult, 'UPDATE');
     if (callresult.error != undefined)
       alert(callresult.error);
   };
