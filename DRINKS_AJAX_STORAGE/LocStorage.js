@@ -1,13 +1,21 @@
 function LocStorage(name) {
-  this.locHash = {"data": []};
+  let that = this;
+  this.id = '';
+  console.log(this.locHash = JSON.parse(localStorage.getItem(name)));
   if(localStorage.getItem(name)) {
     this.locHash = JSON.parse(localStorage.getItem(name));
+
+  } else {
+    this.locHash = {"id": this.id, "data": []};
   }
 
-  let that = this;
+  this.getName = function () {
+    return name;
+  };
 
   this.addValue = function (key, value) {
     this.locHash.data.push({"header": key, "description": value});
+    this.locHash.id = this.id;
     localStorage.setItem(name, JSON.stringify(this.locHash));
     console.log(this.locHash);
     // this.storage[key] = value;

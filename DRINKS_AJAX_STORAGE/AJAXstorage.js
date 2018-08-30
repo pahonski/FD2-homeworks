@@ -1,43 +1,46 @@
 'use strict';
 
-function AjaxStorage() {
+function AjaxStorage(local) {
+  this.locStorage = local;
   this.server = "https://fe.it-academy.by/AjaxStringStorage2.php";
   this.stringName = "KUZNIATSOU_DRINKS_AJAX_STORAGE";
-  this.password = null;
-  this.userData = null;
-  this.dataBase = {};
-  this.emptyId = null;
+  this.password = '';
+  this.dataBase = [];
+  this.emptyId = '';
+  this.userData = '';
+  this.currentId = '';
 
   let that = this;
 
 
-  this.getEmptyId = function () {
-    $.ajax({
-      url: this.server,
-      type: 'POST',
-      cache: false,
-      dataType: 'json',
-      data: {
-        f: 'READ', n: this.stringName
-      },
-      success: function (callresult) {
-        that.emptyId = JSON.parse(callresult.result).length;
-        that.showId(that.emptyId);
-        console.log(that.showId(that.emptyId));
-        },
-      error: that.ajaxErr
-    });
-
-  };
+  // this.getEmptyId = function () {
+  //   $.ajax({
+  //     url: this.server,
+  //     type: 'POST',
+  //     cache: false,
+  //     dataType: 'json',
+  //     data: {
+  //       f: 'READ', n: this.stringName
+  //     },
+  //     success: function (callresult) {
+  //       that.emptyId = JSON.parse(callresult.result).length;
+  //       that.showId(that.emptyId);
+  //       console.log(that.showId(that.emptyId));
+  //       },
+  //     error: that.ajaxErr
+  //   });
+  //
+  // };
 
   this.showId = function (id) {
+    console.log(id);
     return id;
   };
 
   this.addNewUser = function (data) {
-    console.log($);
     let that = this;
     this.userData = data;
+    // this.dataBase.push(this.userData);
     $.ajax({
       url: this.server,
       type: 'POST',
@@ -54,53 +57,82 @@ function AjaxStorage() {
   this.readReady = function (callresult) {
     let that = this;
 
-    if(callresult.error != undefined) {
+    if (callresult.error != undefined) {
       alert(callresult.error);
     } else if (callresult.result != "") {
-      this.emptyId = JSON.parse(callresult.result).length;
-      console.log(callresult.result);
+      console.log('Вызов, если ресулт не пустой', JSON.parse(callresult.result));
+      if (Array.isArray(JSON.parse(callresult.result))) {
+        console.log('Внутри');
+        this.emptyId = JSON.parse(callresult.result).length;
+        console.log(this.emptyId);
+        this.changeBase();
+      }
     } else if (callresult.result === "") {
       this.emptyId = 0;
-      that.createBase(that.emptyId, that.userData);
+      this.locStorage.id = this.emptyId;
+      if (localStorage.getItem(this.locStorage.getName())) {
+        console.log('Зашли к лок стораж');
+        this.userData = localStorage.getItem(this.locStorage.getName());
+        let data = JSON.parse(this.userData);
+        data.id = this.emptyId;
+        data = JSON.stringify(data);
+        localStorage.setItem(this.locStorage.getName(), data);
+        that.createBase(that.emptyId, JSON.parse(this.userData));
+      } else {
+        console.log('Зашли к крейт бейс');
+        that.createBase(that.emptyId, JSON.parse(this.userData));
+      }
+
     }
   };
 
-  this.ajaxErr = function (jqXHR,statusStr,errorStr) {
-    alert(statusStr+' '+errorStr);
+  this.ajaxErr = function (jqXHR, statusStr, errorStr) {
+    alert(statusStr + ' ' + errorStr);
   };
 
   this.createBase = function (id, data) {
+    this.password = Math.random();
+    console.log('Вызван createBase');
+    console.log(this.dataBase);
     let that = this;
-    let base = [];
-    let user = {
-      id: id,
-      data: data
-    };
-    base.push(user);
+    data.id = id;
+    this.dataBase.push(data);
+    console.log('zirim', this.dataBase);
     $.ajax({
       url: this.server,
       type: 'POST',
       cache: false,
       dataType: 'json',
       data: {
-        f: 'INSERT', n: this.stringName, v: JSON.stringify(base)
+        f: 'LOCKGET', n: that.stringName, p: that.password
       },
-      success: that.insertReady,
+      success: that.createReady,
       error: that.ajaxErr
     })
   };
 
-  this.insertReady = function (callresult) {
-    console.log(callresult)
-    // if(callresult == 'OK') {
-    //   alert('Успешно добавлено!')
-    // }
-    // if(callresult.error) {
-    //   alert(callresult.error);
-    // }
+  this.createReady = function (callresult) {
+    console.log('зашли в CREATE реди', callresult);
+    console.log('create ready', this.dataBase);
+    if (callresult.error != undefined)
+      alert(callresult.error);
+    else {
+      $.ajax({
+        url: that.server,
+        type: 'POST',
+        cache: false,
+        dataType: 'json',
+        data: {
+          f: 'UPDATE', n: that.stringName, v: JSON.stringify(that.dataBase), p: that.password
+        },
+        success: that.updateReady,
+        error: that.ajaxErr
+      })
+    }
   };
 
   this.changeBase = function () {
+    console.log('Вызван changeBase');
     this.password = Math.random();
     $.ajax({
       url: this.server,
@@ -110,37 +142,102 @@ function AjaxStorage() {
       data: {
         f: 'LOCKGET', n: this.stringName, p: this.password
       },
-      success: this.changeReady.bind(this),
+      success: this.changeReady.bind(that),
       error: this.ajaxErr
     })
   };
 
   this.changeReady = function (callresult) {
     let that = this;
-    if ( callresult.error!=undefined )
+    if (callresult.error != undefined)
       alert(callresult.error);
     else {
-      this.dataBase = JSON.stringify(callresult.result);
+      this.dataBase = JSON.parse(callresult.result);
+      console.log('NACHINAEM');
+      let a = localStorage.getItem(this.locStorage.getName());
+      a = JSON.parse(a);
+      console.log(a);
+      console.log('Пришедшая дб',this.dataBase, 'id', a.id);
+      if(a.id !== '') {
+        console.log('у меня есть ID!!!!');
+        let id = a.id;
+        this.dataBase.forEach((item) => {
+          if(item.id = id) {
+            this.currentId = id;
+            console.log('ID НАЙДЕН!')
+          }
+        });
+      }
+
+      if(this.currentId) {
+        console.log('если id найден')
+        let userArray = that.dataBase[this.currentId].data;
+        console.log('USER ARRAY', userArray);
+        userArray[0] = (that.userData.data);
+      } else {
+        console.log('если id не найден');
+        that.userData.id = this.emptyId;
+        that.dataBase.push(that.userData);
+      }
+
+
       $.ajax({
         url: this.server,
         type: 'POST',
         cache: false,
         dataType: 'json',
         data: {
-          f: 'UPDATE', n: this.stringName, v: that.dataBase, p: that.password
+          f: 'UPDATE', n: that.stringName, v: JSON.stringify(that.dataBase), p: that.password
         },
-        success: this.updateReady,
-        error: this.ajaxErr
+        success: that.updateReady,
+        error: that.ajaxErr
       })
-      }
+    }
   };
 
-  this.clearError = function () {
-
+  this.clearBase = function () {
+    this.dataBase = null;
   };
 
   this.updateReady = function (callresult) {
-    if ( callresult.error!=undefined )
+    console.log(callresult);
+    if (callresult.error != undefined)
       alert(callresult.error);
+  };
+
+  this.clearBase = function () {
+    console.log('Вызван clearBase');
+    this.password = Math.random();
+    $.ajax({
+      url: this.server,
+      type: 'POST',
+      cache: false,
+      dataType: 'json',
+      data: {
+        f: 'LOCKGET', n: this.stringName, p: this.password
+      },
+      success: this.clearReady.bind(that),
+      error: this.ajaxErr
+    })
+  };
+
+  this.clearReady = function (callresult) {
+    console.log(callresult);
+    let that = this;
+    if (callresult.error != undefined)
+      alert(callresult.error);
+    else {
+      $.ajax({
+        url: this.server,
+        type: 'POST',
+        cache: false,
+        dataType: 'json',
+        data: {
+          f: 'UPDATE', n: that.stringName, v: '', p: that.password
+        },
+        success: that.updateReady,
+        error: that.ajaxErr
+      })
+    }
   }
 }

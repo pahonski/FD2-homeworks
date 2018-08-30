@@ -5,8 +5,10 @@ let addButtonFood = document.querySelector('.add-button-food');
 let alcValue = '';
 let foodValue = '';
 
-let drinkAjax = new AjaxStorage();
-let drinkStorage = new LocStorage("drinks", drinkAjax);
+
+let drinkStorage = new LocStorage("drinks");
+let drinkAjax = new AjaxStorage(drinkStorage);
+// drinkAjax.clearBase();
 
 
 let foodStorage = new LocStorage('food');
@@ -39,7 +41,6 @@ addButton.addEventListener('click', function () {
   console.info('Напиток добавлен!');
   console.log(drinkStorage.locHash);
   drinkAjax.addNewUser(drinkStorage.locHash);
-  drinkStorage.locHash.id
 });
 
 let getValueButton = document.querySelector('.get-value-button');
