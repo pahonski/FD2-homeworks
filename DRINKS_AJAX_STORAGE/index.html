@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>DRINKS HASH</title>
+  <style>
+    div {
+      margin-bottom: 10px;
+    }
+
+    .drinks {
+      margin-bottom: 130px;
+    }
+
+    .add-drink, .add-food {
+      padding: 10px;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <h3>Данные в консоли</h3>
+  <div class="container">
+    <div class="drinks">
+      <div class="add-drink">
+        <div class="drink-name-box">
+          <label for="drink-name">Введите имя напитка:</label>
+          <input type="text" id="drink-name">
+          <br>
+        </div>
+
+        <div class="drink-alcohol-box">
+          <label>Выберите тип напитка:</label>
+          <input type="radio" id="alcohol" name="alcohol" value="да">
+          <label for="alcohol">Алкогольный</label>
+          <input type="radio" id="non-alcohol" name="alcohol" value="нет">
+          <label for="non-alcohol">Безалкогольный</label>
+          <br>
+        </div>
+
+        <div class="drink-reciple-box">
+          <label for="reciple">Введите рецепт напитка:</label>
+          <input type="text" id="reciple">
+          <br>
+        </div>
+
+        <button class="add-button">Добавить напиток</button>
+      </div>
+
+      <div>
+        <input type="text" id="get-value">
+        <button class="get-value-button">Получить напиток по названию</button><br>
+      </div>
+      <div>
+        <input type="text" id="delete-value">
+        <button class="delete-value-button">Удалить напиток из базы</button>
+      </div>
+
+      <button class="get-keys">Получить все напитки</button>
+    </div>
+
+    <div class="food">
+      <div class="add-food">
+        <div class="food-name-box">
+          <label for="food-name">Введите имя блюда:</label>
+          <input type="text" id="food-name">
+          <br>
+        </div>
+
+        <div class="food-fat-box">
+          <label>Выберите жирность блюда:</label>
+          <input type="radio" id="fat" name="fat" value="да">
+          <label for="fat">Жирное</label>
+          <input type="radio" id="non-fat" name="fat" value="нет">
+          <label for="non-fat">Не жирное</label>
+          <br>
+        </div>
+
+        <div class="food-reciple-box">
+          <label for="reciple-food">Введите рецепт блюда:</label>
+          <input type="text" id="reciple-food">
+          <br>
+        </div>
+
+        <button class="add-button-food">Добавить блюдо</button>
+      </div>
+      <div>
+        <input type="text" id="get-value-food">
+        <button class="get-value-button-food">Получить блюдо по названию</button><br>
+      </div>
+      <div>
+        <input type="text" id="delete-value-food">
+        <button class="delete-value-food">Удалить блюдо из базы</button>
+      </div>
+
+      <button class="get-keys-food">Получить все блюда</button>
+    </div>
+
+
+    
+  </div>
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="LocStorage.js"></script>
+  <script src="AJAXstorage.js"></script>
+  <script src="index.js"></script>
+</body>
+
+</html>
