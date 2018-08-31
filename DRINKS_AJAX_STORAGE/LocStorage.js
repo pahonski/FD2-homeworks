@@ -1,6 +1,6 @@
 function LocStorage(name) {
   let that = this;
-  this.id = randomDiap(999999999999, 1);
+  // this.id = randomDiap(999999999999, 1);
   this.locHash = {"id": this.id, "data": []};
 
   if(localStorage.getItem(name)) {
