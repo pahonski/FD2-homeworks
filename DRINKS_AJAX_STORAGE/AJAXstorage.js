@@ -1,7 +1,7 @@
 'use strict';
 
 function AjaxStorage() {
-  this.storageHash = {"data": []};
+  this.storageHash = {};
   this.serverHash = {};
   this.server = "https://fe.it-academy.by/AjaxStringStorage2.php";
   this.stringName = "KUZNIATSOU_DRINKS_AJAX_STORAGE";
@@ -49,8 +49,9 @@ function AjaxStorage() {
   this.readFromServer();
 
   this.addAjaxValue = function (key, value) {
-    that.storageHash.data.push({"header": key, "description": value});
+    that.serverHash[key] = value;
     that.password = Math.random();
+    console.log(that.serverHash);
     $.ajax({
       url: this.server,
       type: 'POST',
@@ -68,11 +69,6 @@ function AjaxStorage() {
     if (callback.error !== undefined)
       alert(callback.error);
     else {
-      if(that.serverLoad === true && that.storageHash.data.length > 0) {
-        that.serverHash.data[that.serverHash.data.length] = that.storageHash.data[that.storageHash.data.length - 1];
-      } else {
-        that.serverHash = that.storageHash;
-      }
       $.ajax({
         url: that.server,
         type: 'POST',
@@ -128,31 +124,28 @@ function AjaxStorage() {
 
   this.getValue = function (key) {
     let result;
-    that.serverHash.data.forEach(function (item) {
-      if(item.header === key) {
-        result = item.description;
-      }
-    });
+    if(key in that.serverHash) {
+      result = that.serverHash[key];
+    }
+
     return result ? result : undefined;
   };
 
   this.deleteValue = function (key) {
     let result = false;
-    that.serverHash.data.forEach(function (item, index) {
-      if (item.header === key) {
-        that.serverHash.data.splice(index, 1);
-        result = true;
-      }
-    });
-    that.updateBase();
+    if (key in that.serverHash) {
+      delete that.serverHash[key];
+      result = true;
+      that.updateBase();
+    }
     return result;
   };
 
   this.getKeys = function () {
     let keysArray = [];
-    this.serverHash.data.forEach(function (item) {
-      keysArray.push(item.header);
-    });
+    for(let drink in that.serverHash) {
+      keysArray.push(drink);
+    }
     return keysArray;
   };
 }
