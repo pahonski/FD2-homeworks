@@ -8,6 +8,8 @@ function AjaxStorage() {
   this.serverLoad = '';
   this.password = '';
 
+  this.readFromServer();
+
   let that = this;
 
   this.readFromServer = function () {

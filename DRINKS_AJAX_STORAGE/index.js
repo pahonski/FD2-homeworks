@@ -6,15 +6,11 @@ let alcValue = '';
 let foodValue = '';
 
 
-// let drinkStorage = new LocStorage("drinks");
 let drinkAjax = new AjaxStorage();
-drinkAjax.readFromServer();
-
 
 //drinkAjax.clearBase();
 
 
-let foodStorage = new LocStorage('food');
 
 
 //drink
@@ -37,7 +33,6 @@ addButton.addEventListener('click', function () {
   dataValue.alcohol = alcValue;
   dataValue.reciple = myReciple;
 
-  // drinkStorage.addValue(drinkName, dataValue);
 
 
   drinkAjax.addAjaxValue(drinkName, dataValue);
@@ -68,57 +63,7 @@ getKeys.addEventListener('click', function () {
 
 });
 
-//food
 
-// let foodBox = addFood.querySelector('.food-fat-box');
-//
-// foodBox.addEventListener('click', function (e) {
-//   if (e.target.name == 'fat') {
-//     foodValue = e.target.value;
-//     console.log(foodValue);
-//   }
-// });
-//
-// addButtonFood.addEventListener('click', function () {
-//
-//   let dataValue = {};
-//
-//   let foodName = addFood.querySelector('#food-name').value.toLowerCase();
-//
-//   let myReciple = addFood.querySelector('#reciple-food').value;
-//
-//   dataValue.fat = foodValue;
-//   dataValue.reciple = myReciple;
-//
-//   foodStorage.addValue(foodName, dataValue);
-//
-//
-//   console.info('Блюдо добавлено!');
-// });
-//
-// let getValueButtonFood = document.querySelector('.get-value-button-food');
-//
-// getValueButtonFood.addEventListener('click', function () {
-//   let key = document.querySelector('#get-value-food').value.toLowerCase();
-//   console.log(foodStorage.getValue(key));
-// });
-//
-// let deleteValueButtonFood = document.querySelector('.delete-value-food');
-//
-// deleteValueButtonFood.addEventListener('click', function () {
-//   let key = document.querySelector('#delete-value-food').value.toLowerCase();
-//
-//   console.log(foodStorage.deleteValue(key));
-//
-// });
-//
-// let getKeysFood = document.querySelector('.get-keys-food');
-//
-// getKeysFood.addEventListener('click', function () {
-//
-//   console.log(foodStorage.getKeys());
-//
-// });
 
 
 
