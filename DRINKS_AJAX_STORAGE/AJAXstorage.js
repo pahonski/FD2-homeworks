@@ -8,7 +8,7 @@ function AjaxStorage() {
   this.serverLoad = '';
   this.password = '';
 
-  this.readFromServer();
+
 
   let that = this;
 
@@ -45,6 +45,8 @@ function AjaxStorage() {
     }
 
   };
+
+  this.readFromServer();
 
   this.addAjaxValue = function (key, value) {
     that.storageHash.data.push({"header": key, "description": value});
