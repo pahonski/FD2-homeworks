@@ -1,7 +1,6 @@
 'use strict';
 
 function AjaxStorage() {
-  this.storageHash = {};
   this.serverHash = {};
   this.server = "https://fe.it-academy.by/AjaxStringStorage2.php";
   this.stringName = "KUZNIATSOU_DRINKS_AJAX_STORAGE";
